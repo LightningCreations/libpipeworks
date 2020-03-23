@@ -7,5 +7,6 @@ typedef struct pw_engine pw_engine;
 
 pw_engine* pw_init_engine();
 void add_thing(pw_engine*, pw_thing*);
+void pw_destroy_engine(pw_engine*);
 
 #endif
