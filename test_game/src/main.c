@@ -2,15 +2,15 @@
 
 #define STATE_MENU STATE_PRIME+1 // STATE_PRIME is the base of all non-reserved states
 
-struct game_data
+typedef struct data
 {
     pw_engine *engine;
     pw_thing *menu;
-} game_data;
+} data;
 
-void game_load_state(pw_game_state next)
+void game_load_state(pw_game_state next, pw_engine *engine, void *_game_data)
 {
-    pw_engine *engine = game_data.engine;
+    data game_data = *((data*) _game_data);
     switch(next)
     {
     case STATE_PRIME:
@@ -29,11 +29,12 @@ void game_load_state(pw_game_state next)
 int main()
 {
     pw_engine *engine = pw_init_engine();
-    game_data.engine = engine;
 
     pw_game *game = pw_init_game();
 
-    pw_set_load_state(game, game_load_state);
+    data game_data;
+
+    pw_set_load_state(game, game_load_state, (void*)(&game_data));
 
     pw_set_game(engine, game);
 }

@@ -2,10 +2,10 @@
 #define PRIVATE_ENGINE_H
 
 #include <pipeworks/engine.h>
-//#include "stretchy_buffer.h"
+#include "ll.h"
 
 struct pw_engine {
-    pw_thing **things; // STRETCHY BUFFER, vector of (pw_thing *)
+    ll *things; // list of (pw_thing *)
 };
 
 #endif
