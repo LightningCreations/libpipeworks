@@ -1,11 +1,11 @@
 #ifndef PIPEWORKS_ENGINE_H
 #define PIPEWORKS_ENGINE_H
 
-typedef struct pw_thing {
+#include "thing.h"
 
-} pw_thing;
+typedef struct pw_engine pw_engine;
 
-void init_engine();
-void add_thing(pw_thing*);
+pw_engine* pw_init_engine();
+void add_thing(pw_engine*, pw_thing*);
 
 #endif

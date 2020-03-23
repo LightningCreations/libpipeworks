@@ -1,10 +1,15 @@
+#include <stdlib.h>
+#include "stretchy_buffer.h"
+
 #include <pipeworks/engine.h>
 #include "engine.h"
 
-void init_engine() {
-    pw_engine_state.things = NULL; // STRETCHY BUFFER
+pw_engine* pw_init_engine() {
+    pw_engine *result = malloc(sizeof(pw_engine));
+    result->things = NULL; // STRETCHY BUFFER
+    return result;
 }
 
-void add_thing(pw_thing *thing) {
-    sb_push(pw_engine_state.things, thing);
+void pw_add_thing(pw_engine *engine, pw_thing *thing) {
+    sb_push(engine->things, thing);
 }
