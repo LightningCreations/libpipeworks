@@ -3,4 +3,5 @@ cmake_minimum_required(VERSION 3.10)
 
 include_directories(include)
 
-add_library(pipeworks SHARED src/engine.c src/game.c)
+add_subdirectory(pipeworks)
+add_subdirectory(test_game)
