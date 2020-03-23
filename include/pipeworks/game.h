@@ -16,6 +16,6 @@ pw_game* pw_init_game();
 void pw_destroy_game(pw_game*);
 
 // Configuration
-void pw_set_load_state(pw_game*, void(*)(pw_game_state));
+void pw_set_load_state(pw_game*, void(*)(pw_game_state,void*),void* userdata);
 
 #endif
