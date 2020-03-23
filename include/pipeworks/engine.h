@@ -5,4 +5,7 @@ typedef struct pw_thing {
 
 } pw_thing;
 
+void init_engine();
+void add_thing(pw_thing*);
+
 #endif
