@@ -1,8 +1,6 @@
-project(libpipeworks CXX)
+project(libpipeworks C)
 cmake_minimum_required(VERSION 3.10)
 
-include_directories(include util/collect/include)
+include_directories(include)
 
-add_subdirectory(util/collect)
-
-add_library(pipeworks SHARED src/engine.c src/game.c util/collect)
+add_library(pipeworks SHARED src/engine.c src/game.c)
