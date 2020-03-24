@@ -1,1 +1,2 @@
-add_library(pipeworks SHARED src/engine.c src/thing.c src/game.c)
+add_library(pipeworks src/engine.c src/thing.c src/game.c)
+install(TARGETS pipeworks)

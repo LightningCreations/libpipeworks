@@ -5,3 +5,5 @@ include_directories(include)
 
 add_subdirectory(pipeworks)
 add_subdirectory(test_game)
+
+install(DIRECTORIES include DESTINATION include)
