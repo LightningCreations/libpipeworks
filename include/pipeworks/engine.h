@@ -1,10 +1,10 @@
+typedef struct pw_engine pw_engine;
+
 #ifndef PIPEWORKS_ENGINE_H
 #define PIPEWORKS_ENGINE_H
 
 #include "game.h"
 #include "thing.h"
-
-typedef struct pw_engine pw_engine;
 
 // Creation/destruction
 pw_engine* pw_init_engine();

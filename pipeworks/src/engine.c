@@ -5,8 +5,8 @@
 // Libc includes
 #include <stdlib.h>
 
-// External lib includes
-#include "stretchy_buffer.h"
+// Non-pipeworks lib includes
+#include "ll.h"
 
 // Pipeworks includes
 #include <pipeworks/thing.h>
@@ -14,20 +14,27 @@
 pw_engine* pw_init_engine()
 {
     pw_engine *result = malloc(sizeof(pw_engine));
-    result->things = NULL; // STRETCHY BUFFER
+    result->things = ll_init();
     return result;
 }
 
 void pw_engine_add_thing(pw_engine *engine, pw_thing *thing)
 {
-    sb_push(engine->things, thing);
+    ll_push(engine->things, thing);
+}
+
+void pw_load_state(pw_engine *engine, pw_game_state next)
+{
+}
+
+void pw_set_game(pw_engine *engine, pw_game *game)
+{
 }
 
 void pw_destroy_engine(pw_engine *engine)
 {
     if(!engine) return;
-    for(int i = 0; i < sb_count(engine->things); i++)
-        pw_destroy_thing(engine->things[i]);
-    sb_free(engine->things);
+    ll_foreach(engine->things, pw_destroy_thing);
+    ll_free(engine->things);
     free(engine);
 }
