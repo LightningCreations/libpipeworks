@@ -12,8 +12,8 @@ extern "C"
 
 struct pw_game
 {
-    void(*load_state)(pw_game_state, pw_engine*, void*),
-    void* load_state_userdata
+    void(*load_state)(pw_game_state, pw_engine*, void*);
+    void *load_state_userdata;
 };
 
 #ifdef __cplusplus
