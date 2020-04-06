@@ -17,6 +17,7 @@ void pw_stop(pw_engine*);
 
 // Configuring
 void pw_set_game(pw_engine*, pw_game*);
+pw_game* pw_engine_release_game(pw_engine*);
 
 // Commands
 void pw_engine_add_thing(pw_engine*, pw_thing*); // To distinguish from pw_canvas_add_thing
