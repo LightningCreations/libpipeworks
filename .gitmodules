@@ -1,0 +1,9 @@
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/LightningCreations/SDL.git
+[submodule "libpng"]
+	path = libpng
+	url = https://github.com/LightningCreations/libpng.git
+[submodule "flac"]
+	path = flac
+	url = https://github.com/LightningCreations/flac.git
