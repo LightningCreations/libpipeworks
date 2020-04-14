@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for dir in SDL libpng flac
+for dir in SDL libpng flac zlib
 do
 pushd $dir
 git pull upstream master
