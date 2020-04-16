@@ -6,5 +6,7 @@ add_library(pipeworks src/engine.c src/thing.c src/game.c src/ll.c)
 
 add_dependencies(pipeworks SDL2 png FLAC)
 target_link_libraries(pipeworks SDL2 png FLAC)
-install(TARGETS pipeworks)
-
+install(TARGETS pipeworks
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
