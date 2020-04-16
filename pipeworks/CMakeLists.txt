@@ -7,6 +7,11 @@ add_library(pipeworks src/engine.c src/thing.c src/game.c src/ll.c ../include/pi
 add_dependencies(pipeworks SDL2 png FLAC)
 target_link_libraries(pipeworks SDL2 png FLAC)
 install(TARGETS pipeworks
+    EXPORT pipeworks
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
+
+install(EXPORT pipeworks
+    NAMESPACE pipeworks::
+    DESTINATION lib/cmake/pipeworks)
