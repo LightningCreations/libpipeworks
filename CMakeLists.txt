@@ -1,5 +1,7 @@
 project(libpipeworks C)
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
+
+
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(PNG_BUILD_ZLIB ${CMAKE_CURRENT_SRC_DIR}/zlib)
