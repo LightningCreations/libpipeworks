@@ -2,7 +2,7 @@ project(libpipeworks C)
 cmake_minimum_required(VERSION 3.15)
 
 
-
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/opt/vc/lib") # RPi compatibility
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 set(PNG_BUILD_ZLIB ${CMAKE_CURRENT_SRC_DIR}/zlib)
 set(ZLIB_LIBRARY zlib)

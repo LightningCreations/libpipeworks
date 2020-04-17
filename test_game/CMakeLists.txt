@@ -1,4 +1,4 @@
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/opt/vc/lib")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/opt/vc/lib")
 
 add_executable(test_game src/main.c)
 add_dependencies(test_game pipeworks)
