@@ -8,6 +8,7 @@ ll *ll_init()
     list->size = 0;
     list->first = NULL;
     list->last = NULL;
+    return list;
 }
 
 void ll_push(ll *list, void *item)
