@@ -3,6 +3,7 @@
 #include "engine.h"
 
 // Libc includes
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdatomic.h>
@@ -53,21 +54,37 @@ static int pw_internal_start0(void *_engine)
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, 0);
-    if(!renderer) {
+    if(!renderer)
+    {
         printf("**PIPEWORKS ERROR** SDL failed to create a renderer: %s\n", SDL_GetError());
         goto cleanup;
     }
 
     SDL_Texture *texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
-    if(!texture) {
+    if(!texture)
+    {
         printf("**PIPEWORKS ERROR** SDL failed to create a texture: %s\n", SDL_GetError());
         goto cleanup;
     }
 
-    SDL_Delay(3000); // TODO: MAIN LOOP
+    uint8_t *pixels = malloc(1280*720*3);
+    pw_bool running = 1; // TODO: pw_stop sets this to false
+    SDL_Event event;
+    while(running)
+    {
+        while(SDL_PollEvent(&event))
+        {
+            if(event.type == SDL_QUIT)
+                running = 0;
+        }
+        SDL_UpdateTexture(texture, NULL, pixels, 1280*3);
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+        SDL_RenderPresent(renderer);
+    }
 
-    status = 0;
+    status = 0; // If we made it here, it must have been successful
     cleanup:
+    if(pixels) free(pixels);
     if(texture) SDL_DestroyTexture(texture);
     if(renderer) SDL_DestroyRenderer(renderer);
     if(window) SDL_DestroyWindow(window);
