@@ -1,5 +1,3 @@
-include(FindThreads)
-
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wno-incompatible-pointer-types")
 
 if(NOT DEFINED PW_BUILD_SHARED)
