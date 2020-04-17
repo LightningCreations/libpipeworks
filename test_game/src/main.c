@@ -1,7 +1,8 @@
 #include <pipeworks/engine.h>
 
-#define STATE_MENU STATE_PRIME+1 // STATE_PRIME is the base of all non-reserved states
-
+enum{
+    STATE_MENU = STATE_PRIME+1
+};
 typedef struct data
 {
     pw_engine *engine;
