@@ -12,6 +12,8 @@
 // Pipeworks includes
 #include <pipeworks/thing.h>
 
+volatile uint8_t pw_activeEngines;
+
 pw_engine* pw_init_engine()
 {
     pw_engine *result = malloc(sizeof(pw_engine));
@@ -23,14 +25,22 @@ void pw_internal_start0(void *_engine)
 {
     pw_engine *engine = (pw_engine*) _engine;
 
-    SDL_Init(SDL_INIT_VIDEO);
+    pw_activeEngines++;
+    if(pw_activeEngines == 1) // TODO: Improve thread safety
+    {
+        SDL_Init(SDL_INIT_VIDEO);
+    }
     SDL_Window *window = SDL_CreateWindow("TODO: Add config for window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
 
     SDL_Delay(3000); // TODO: Add game loop
 
     SDL_DestroyWindow(window);
 
-    SDL_Quit();
+    pw_activeEngines--;
+    if(pw_activeEngines == 0)
+    {
+        SDL_Quit();
+    }
 }
 
 void pw_start(pw_engine *engine)
