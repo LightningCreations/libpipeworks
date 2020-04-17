@@ -1,5 +1,4 @@
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wno-incompatible-pointer-types")
-set(CMAKE_
 
 if(NOT DEFINED PW_BUILD_SHARED)
 set(PW_BUILD_SHARED ON)

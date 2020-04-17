@@ -4,15 +4,17 @@
 
 // Libc includes
 #include <stdlib.h>
+#include <stdatomic.h>
 
 // Non-pipeworks lib includes
 #include "ll.h"
 #include <SDL.h>
+#include <SDL_thread.h>
 
 // Pipeworks includes
 #include <pipeworks/thing.h>
 
-volatile uint8_t pw_activeEngines;
+
 
 pw_engine* pw_init_engine()
 {
@@ -21,26 +23,31 @@ pw_engine* pw_init_engine()
     return result;
 }
 
-void pw_internal_start0(void *_engine)
+static void pw_internal_at_exit(void){
+    SDL_Quit();
+}
+
+static int pw_internal_start0(void *_engine)
 {
+    static atomic_flag blocking = ATOMIC_FLAG_INIT;
+    static atomic_flag init = ATOMIC_FLAG_INIT;
+    init_critical_section: { // May be a good idea to hoist this to pw_init_engine()
+        while(atomic_flag_test_and_set_explicit(&blocking,memory_order_acquire))/*yield*/;
+        if(!atomic_flag_test_and_set(&init)&&SDL_Init(SDL_INIT_EVERYTHING))
+            atomic_flag_clear(&init);
+        else
+            atexit(pw_internal_at_exit);
+        atomic_flag_clear_explicit(&blocking,memory_order_release);
+    }
+    
     pw_engine *engine = (pw_engine*) _engine;
 
-    pw_activeEngines++;
-    if(pw_activeEngines == 1) // TODO: Improve thread safety
-    {
-        SDL_Init(SDL_INIT_VIDEO);
-    }
     SDL_Window *window = SDL_CreateWindow("TODO: Add config for window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
 
     SDL_Delay(3000); // TODO: Add game loop
 
     SDL_DestroyWindow(window);
-
-    pw_activeEngines--;
-    if(pw_activeEngines == 0)
-    {
-        SDL_Quit();
-    }
+    return 0;
 }
 
 void pw_start(pw_engine *engine)
