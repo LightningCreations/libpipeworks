@@ -1,6 +1,7 @@
 include(FindThreads)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wno-incompatible-pointer-types")
+set(CMAKE_
 
 if(NOT DEFINED PW_BUILD_SHARED)
 set(PW_BUILD_SHARED ON)
@@ -21,6 +22,7 @@ add_library(pipeworks-shared SHARED ${PW_OBJ})
 target_link_libraries(pipeworks-shared SDL2 png FLAC)
 set_target_properties(pipeworks-shared PROPERTIES OUTPUT_NAME "pipeworks")
 set_target_properties(pipeworks-shared PROPERTIES SOVERSION 0)
+set_property(TARGET pipeworks-shared PROPERTY C_STANDARD 11)
 install(TARGETS pipeworks-shared
     EXPORT pipeworks
     RUNTIME DESTINATION bin
@@ -33,6 +35,7 @@ message("libpipeworks: Building Pipeworks Static Library")
 add_library(pipeworks-static STATIC ${PW_OBJ})
 set_target_properties(pipeworks-static PROPERTIES OUTPUT_NAME "pipeworks")
 target_link_libraries(pipeworks-static SDL2 png FLAC)
+set_property(TARGET pipeworks-static PROPERTY C_STANDARD 11)
 install(TARGETS pipeworks-static
     EXPORT pipeworks
     RUNTIME DESTINATION bin
