@@ -108,10 +108,20 @@ void pw_engine_add_thing(pw_engine *engine, pw_thing *thing)
 
 void pw_load_state(pw_engine *engine, pw_game_state next)
 {
+    engine->next_state = next;
+    engine->trigger_load = 1;
 }
 
 void pw_set_game(pw_engine *engine, pw_game *game)
 {
+    engine->game = game;
+}
+
+pw_game *pw_engine_release_game(pw_engine *engine)
+{
+    pw_game *result = engine->game;
+    engine->game = NULL; // Make sure we don't use the game
+    return result;
 }
 
 void pw_destroy_engine(pw_engine *engine)
