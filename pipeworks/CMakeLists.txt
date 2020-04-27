@@ -13,7 +13,7 @@ message(FATAL_ERROR "libpipeworks Error: Not building either pipeworks shared or
 endif()
 
 if(PW_BUILD_SHARED)
-message("libpipeworks: Building Pipeworks Shared Library")
+message(STATUS "libpipeworks: Building Pipeworks Shared Library")
 set(PW_OBJ src/engine.c src/thing.c src/game.c src/ll.c ../include/pipeworks/engine.h ../include/pipeworks/game.h ../include/pipeworks/thing.h ../include/pipeworks/pw-std.h)
 add_library(pipeworks-shared SHARED ${PW_OBJ})
 target_link_libraries(pipeworks-shared SDL2 png FLAC)
@@ -28,7 +28,7 @@ install(TARGETS pipeworks-shared
 add_library(pipeworks ALIAS pipeworks-shared)
 endif()
 if(PW_BUILD_STATIC)
-message("libpipeworks: Building Pipeworks Static Library")
+message(STATUS "libpipeworks: Building Pipeworks Static Library")
 add_library(pipeworks-static STATIC ${PW_OBJ})
 set_target_properties(pipeworks-static PROPERTIES OUTPUT_NAME "pipeworks")
 target_link_libraries(pipeworks-static SDL2 png FLAC)
