@@ -6,7 +6,7 @@ message(STATUS "Building libpipeworks")
 set(PNG_BUILD_ZLIB ON)
 set(WITH_OGG OFF)
 set(ZLIB_LIBRARY zlib)
-set(ZLIB_INCLUDE ${CMAKE_CURRENT_SRC_DIR}/zlib)
+set(ZLIB_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SRC_DIR}/zlib)
 
 
 add_subdirectory(zlib)
