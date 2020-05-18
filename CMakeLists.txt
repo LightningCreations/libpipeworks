@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 
 message(STATUS "Building libpipeworks")
 
-set(PNG_BUILD_ZLIB OFF)
+set(PNG_BUILD_ZLIB ON)
 set(ZLIB_LIBRARY zlib)
 set(ZLIB_INCLUDE ${CMAKE_CURRENT_SRC_DIR}/zlib)
 
