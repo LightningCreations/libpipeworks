@@ -3,17 +3,10 @@ cmake_minimum_required(VERSION 3.15)
 
 message(STATUS "Building libpipeworks")
 
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -L/opt/vc/lib") # RPi compatibility
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/opt/vc/lib") # RPi compatibility
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-set(PNG_BUILD_ZLIB ${CMAKE_CURRENT_SRC_DIR}/zlib)
+set(PNG_BUILD_ZLIB OFF)
 set(ZLIB_LIBRARY zlib)
 set(ZLIB_INCLUDE ${CMAKE_CURRENT_SRC_DIR}/zlib)
 
-include_directories(include)
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/SDL/include)
-include_directories(SDL/include)
-include_directories(libpng)
 
 add_subdirectory(zlib)
 add_subdirectory(SDL)
