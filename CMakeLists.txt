@@ -6,7 +6,7 @@ message(STATUS "Building libpipeworks")
 set(PNG_BUILD_ZLIB ON CACHE BOOL "Pipeworks uses internal ZLib by default")
 set(ZLIB_LIBRARY zlib)
 set(ZLIB_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SRC_DIR}/zlib)
-set(WITH_OGG OFF)
+set(WITH_OGG OFF CACHE BOOL "Build FLAC with OGG support")
 
 add_subdirectory(zlib)
 add_subdirectory(SDL)
