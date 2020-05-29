@@ -6,7 +6,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifndef _MSC_VER
 #include <stdatomic.h>
+#else
+#include "stdatomic.h"
+#endif
 
 // Non-pipeworks lib includes
 #include "ll.h"
