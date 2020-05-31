@@ -15,11 +15,19 @@ if(NOT PW_BUILD_SHARED AND NOT PW_BUILD_STATIC)
 message(FATAL_ERROR "libpipeworks Error: Not building either pipeworks shared or pipeworks static")
 endif()
 
+
+add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.c ../include/pipeworks/engine.h ../include/pipeworks/game.h ../include/pipeworks/thing.h ../include/pipeworks/pw-std.h)
+
 if(PW_BUILD_SHARED)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
+<<<<<<< HEAD
 set(PW_OBJ src/engine.c src/thing.c src/game.c src/ll.c)
 include_directories(include)
 add_library(pipeworks-shared SHARED ${PW_OBJ})
+=======
+
+add_library(pipeworks-shared SHARED $<TARGET_OBJECTS:pipeworks-objects>)
+>>>>>>> Fix the static-lib getting no sources if the shared-lib is disabled
 target_link_libraries(pipeworks-shared SDL2 png FLAC)
 set_target_properties(pipeworks-shared PROPERTIES OUTPUT_NAME "pipeworks")
 set_target_properties(pipeworks-shared PROPERTIES SOVERSION 0)
@@ -33,7 +41,7 @@ add_library(pipeworks ALIAS pipeworks-shared)
 endif()
 if(PW_BUILD_STATIC)
 message(STATUS "libpipeworks: Building Pipeworks Static Library")
-add_library(pipeworks-static STATIC ${PW_OBJ})
+add_library(pipeworks-static STATIC $<TARGET_OBJECTS:pipeworks-objects>)
 if(NOT WIN32)
 set_target_properties(pipeworks-static PROPERTIES OUTPUT_NAME "pipeworks")
 else()
