@@ -20,14 +20,7 @@ add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.
 
 if(PW_BUILD_SHARED)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
-<<<<<<< HEAD
-set(PW_OBJ src/engine.c src/thing.c src/game.c src/ll.c)
-include_directories(include)
-add_library(pipeworks-shared SHARED ${PW_OBJ})
-=======
-
 add_library(pipeworks-shared SHARED $<TARGET_OBJECTS:pipeworks-objects>)
->>>>>>> Fix the static-lib getting no sources if the shared-lib is disabled
 target_link_libraries(pipeworks-shared SDL2 png FLAC)
 set_target_properties(pipeworks-shared PROPERTIES OUTPUT_NAME "pipeworks")
 set_target_properties(pipeworks-shared PROPERTIES SOVERSION 0)
