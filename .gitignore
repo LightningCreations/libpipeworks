@@ -54,3 +54,6 @@ dkms.conf
 # Build directories
 build/
 /cmake-build-debug/
+
+# Vim temporary files
+*~

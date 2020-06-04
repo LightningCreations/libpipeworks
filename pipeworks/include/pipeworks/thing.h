@@ -4,11 +4,13 @@
 extern"C"{
 #endif
 
+#include <pipeworks/config.h>
+
 typedef struct pw_thing pw_thing;
 
-pw_thing *pw_init_thing();
+PIPEWORKS_API pw_thing *pw_init_thing();
 
-void pw_destroy_thing(pw_thing *);
+PIPEWORKS_API void pw_destroy_thing(pw_thing *);
 
 #ifdef __cplusplus
 };

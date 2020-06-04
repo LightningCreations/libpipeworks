@@ -6,6 +6,8 @@ extern "C"
 {
 #endif
 
+#include <pipeworks/config.h>
+
 #include <stdint.h>
 
 typedef uint8_t pw_bool;

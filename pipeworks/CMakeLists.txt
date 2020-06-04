@@ -20,6 +20,9 @@ add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.
 target_include_directories(pipeworks-objects PUBLIC ${PIPEWORKS_SDL_ROOTDIR}/include include)
 set_target_properties(pipeworks-objects PROPERTIES C_STANDARD 11
 	 POSITION_INDEPENDENT_CODE ON)
+if(PW_BUILD_SHARED)
+target_compile_definitions(pipeworks-objects PRIVATE PIPEWORKS_BUILDSHARED)
+endif()
 
 if(PW_BUILD_SHARED)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
