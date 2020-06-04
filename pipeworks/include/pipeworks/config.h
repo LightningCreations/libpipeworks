@@ -6,7 +6,7 @@
 #define PIPEWORKS_EXPORT __declspec(dllexport)
 #define PIPEWORKS_IMPORT __declspec(dllimport)
 #else
-#define PIPEWORKS_EXPORt __attribute__((visibility("default")))
+#define PIPEWORKS_EXPORT __attribute__((visibility("default")))
 #define PIPEWORKS_IMPORT __attribute__((visibility("default")))
 #endif
 
