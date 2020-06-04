@@ -17,6 +17,8 @@ endif()
 
 
 add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.c include/pipeworks/engine.h include/pipeworks/game.h include/pipeworks/thing.h include/pipeworks/pw-std.h)
+target_include_directories(pipeworks-objects PUBLIC ${PIPEWORKS_SDL_ROOTDIR}/include include)
+
 
 if(PW_BUILD_SHARED)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
