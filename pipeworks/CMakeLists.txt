@@ -1,8 +1,3 @@
-
-if(NOT MSVC)
-add_compile_options(-g -O3 -Wno-incompatible-pointer-types)
-endif()
-
 if(NOT DEFINED PW_BUILD_SHARED)
 set(PW_BUILD_SHARED ON)
 endif()
