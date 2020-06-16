@@ -25,6 +25,7 @@ PIPEWORKS_API void pw_destroy_game(pw_game *);
 
 // Configuration
 PIPEWORKS_API void pw_set_load_state(pw_game *, void(*)(pw_game_state, pw_engine *, void *), void *);
+PIPEWORKS_API void pw_set_load_state_cleanup(pw_game *, void(*)(pw_game_state, pw_engine *, void *), void *,void(*)(void *));
 
 #ifdef __cplusplus
 };
