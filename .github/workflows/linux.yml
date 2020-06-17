@@ -1,0 +1,20 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build CMake
+      uses: ashutoshvarma/action-cmake-build@v1
+      with:
+        # C Compiler for toolchain
+        cc: clang # optional
+        # C++ Compiler for toolchain
+        cxx: clang++ # optional
+        update-submodules: true 
