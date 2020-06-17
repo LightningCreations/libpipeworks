@@ -10,11 +10,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Build CMake
+    - name: Clang Build
       uses: ashutoshvarma/action-cmake-build@v1
       with:
         # C Compiler for toolchain
         cc: clang # optional
         # C++ Compiler for toolchain
         cxx: clang++ # optional
-        update-submodules: true 
+        update-submodules: true
+        parallel: 8
+    - name: gcc Build
+      uses: ashutoshvarma/action-cmake-build@v1
+      with:
+        # C Compiler for toolchain
+        cc: gcc # optional
+        # C++ Compiler for toolchain
+        cxx: g++ # optional
+        update-submodules: true
+        parallel: 8
