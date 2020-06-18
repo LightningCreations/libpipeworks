@@ -1,9 +1,11 @@
 # libpipeworks
 C version of the Pipeworks Engine, a 2D game engine written for simplicity and efficiency
 
-## Builds
+## CI Builds
 
-Linux: ![C/C++ CI](https://github.com/LightningCreations/libpipeworks/workflows/C/C++%20CI/badge.svg)
+Linux (gcc and clang): ![C/C++ CI Linux](https://github.com/LightningCreations/libpipeworks/workflows/C/C++%20CI%20Linux/badge.svg)
+Windows (msvc): ![C/C++ CI Windows](https://github.com/LightningCreations/libpipeworks/workflows/C/C++%20CI%20Windows/badge.svg)
+MacOS (clang): ![C/C++ CI OSX](https://github.com/LightningCreations/libpipeworks/workflows/C/C++%20CI%20OSX/badge.svg)
 
 ## License
 
