@@ -131,7 +131,7 @@ pw_game *pw_engine_release_game(pw_engine *engine)
 void pw_destroy_engine(pw_engine *engine)
 {
     if(!engine) return;
-    ll_foreach(engine->things, pw_destroy_thing);
+    ll_foreach(engine->things, (void(*)(void*)) pw_destroy_thing);
     ll_free(engine->things);
     free(engine);
 }
