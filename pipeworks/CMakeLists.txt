@@ -19,7 +19,7 @@ add_library(pipeworks-interface INTERFACE)
 
 
 target_include_directories(pipeworks-interface INTERFACE $<INSTALL_INTERFACE:include>)
-target_link_libraries(pipeworks-interface INTERFACE SDL2 png FLAC)
+target_link_libraries(pipeworks-interface INTERFACE SDL2 png SndFile)
 
 install(TARGETS pipeworks-interface EXPORT pipeworks)
 
