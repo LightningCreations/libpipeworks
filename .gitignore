@@ -52,8 +52,8 @@ Mkfile.old
 dkms.conf
 
 # Build directories
-build/
-/cmake-build-debug/
+build*/
+/cmake-build-*/
 
 # Vim temporary files
 *~

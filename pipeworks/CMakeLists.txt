@@ -12,7 +12,18 @@ endif()
 
 
 add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.c include/pipeworks/engine.h include/pipeworks/game.h include/pipeworks/thing.h include/pipeworks/pw-std.h)
-target_include_directories(pipeworks-objects PUBLIC ${PIPEWORKS_SDL_ROOTDIR}/include include)
+
+add_library(pipeworks-interface INTERFACE)
+
+
+target_include_directories(pipeworks-interface INTERFACE $<INSTALL_INTERFACE:include>)
+target_link_libraries(pipeworks-interface INTERFACE SDL2 png FLAC)
+
+install(TARGETS pipeworks-interface EXPORT pipeworks)
+
+target_link_libraries(pipeworks-objects pipeworks-interface)
+
+
 set_target_properties(pipeworks-objects PROPERTIES C_STANDARD 11
 	 POSITION_INDEPENDENT_CODE ON)
 if(PW_BUILD_SHARED)
@@ -22,7 +33,7 @@ endif()
 if(PW_BUILD_SHARED)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
 add_library(pipeworks-shared SHARED $<TARGET_OBJECTS:pipeworks-objects>)
-target_link_libraries(pipeworks-shared SDL2 png FLAC)
+target_link_libraries(pipeworks-shared pipeworks-interface)
 set_target_properties(pipeworks-shared PROPERTIES OUTPUT_NAME "pipeworks")
 set_target_properties(pipeworks-shared PROPERTIES SOVERSION 0.1.0)
 install(TARGETS pipeworks-shared
@@ -35,7 +46,7 @@ endif()
 if(PW_BUILD_STATIC)
 message(STATUS "libpipeworks: Building Pipeworks Static Library")
 add_library(pipeworks-static STATIC $<TARGET_OBJECTS:pipeworks-objects>)
-target_link_libraries(pipeworks-static SDL2 png FLAC)
+target_link_libraries(pipeworks-static pipeworks-interface)
 if(NOT WIN32)
 set_target_properties(pipeworks-static PROPERTIES OUTPUT_NAME "pipeworks")
 else()

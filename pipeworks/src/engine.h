@@ -4,7 +4,7 @@
 #include <pipeworks/engine.h>
 #include <pipeworks/game.h>
 #include "ll.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 struct pw_engine {
     ll *things; // list of (pw_thing *)

@@ -14,8 +14,8 @@
 
 // Non-pipeworks lib includes
 #include "ll.h"
-#include <SDL.h>
-#include <SDL_thread.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_thread.h>
 
 // Pipeworks includes
 #include <pipeworks/thing.h>
