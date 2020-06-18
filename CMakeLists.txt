@@ -9,7 +9,7 @@ mark_as_advanced(PIPEWORKS_USE_SYSTEM_LIBRARIES)
 
 option(PIPEWORKS_USE_SYSTEM_LIBPNG "Use System libpng rather than building it in pipeworks" ${PIPEWORKS_USE_SYSTEM_LIBRARIES})
 option(PIPEWORKS_USE_SYSTEM_SDL "Use the system libSDL2 rather than building it" ${PIPEWORKS_USE_SYSTEM_LIBRARIES})
-option(PIPEWORKS_USE_SYSTEM_LIBSNDFILE "Use the system libsndfile rather than building it" ${PIPEWORKS_USE_SYSTEM_LIBRARIES})
+option(PIPEWORKS_USE_SYSTEM_LIBSNDFILE "Use the system libsndfile rather than building it" OFF)
 
 if(NOT PIPEWORKS_USE_SYSTEM_LIBPNG)
 	set(PNG_BUILD_ZLIB ON CACHE BOOL "Pipeworks uses internal ZLib by default")
@@ -19,8 +19,7 @@ if(NOT PIPEWORKS_USE_SYSTEM_LIBPNG)
 	add_subdirectory(zlib)
 	add_subdirectory(libpng)
 else()
-	find_package(libpng)
-	add_library(png ALIAS libpng::png)
+	find_package(PNG)
 endif()
 
 if(NOT PIPEWORKS_USE_SYSTEM_SDL)
