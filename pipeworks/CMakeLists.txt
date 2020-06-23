@@ -23,7 +23,7 @@ target_link_libraries(pipeworks-interface INTERFACE SDL2 png sndfile)
 
 install(TARGETS pipeworks-interface EXPORT pipeworks)
 
-target_link_libraries(pipeworks-objects pipeworks-interface)
+target_link_libraries(pipeworks-objects PRIVATE pipeworks-interface)
 
 
 set_target_properties(pipeworks-objects PROPERTIES C_STANDARD 11

@@ -35,8 +35,11 @@ else()
 	find_package(SndFile)
 endif()
 
-add_subdirectory(pipeworks)
-add_subdirectory(test_game)
+if(PIPEWORKS_CLANG_TIDY)
+    set(CMAKE_C_CLANG_TIDY ${PIPEWORKS_CLANG_TIDY} -checks=bugprone-*,clang-analyzer-*,-clang-analyzer-cplusplus*)
+    add_subdirectory(pipeworks)
+    add_subdirectory(test_game)
+endif()
 
 
 install(DIRECTORY pipeworks/include/pipeworks DESTINATION include)

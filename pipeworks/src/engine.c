@@ -34,19 +34,20 @@ static void pw_internal_at_exit(void){
 static int pw_internal_start0(void *_engine)
 {
     int status = 1;
-    static atomic_flag blocking = ATOMIC_FLAG_INIT;
+    static volatile atomic_flag blocking = ATOMIC_FLAG_INIT;
     static atomic_flag init = ATOMIC_FLAG_INIT;
-    init_critical_section: { // May be a good idea to hoist this to pw_init_engine()
-        while(atomic_flag_test_and_set_explicit(&blocking,memory_order_acquire))/*yield*/;
-        if(!atomic_flag_test_and_set(&init)&&SDL_Init(SDL_INIT_EVERYTHING))
+    init_critical_section: { // May be a good idea to hoist this to pw_init_engine
+        while(!atomic_flag_test_and_set_explicit(&blocking,memory_order_acquire))/*yield*/;
+        if(!atomic_flag_test_and_set(&init)&&SDL_Init(SDL_INIT_EVERYTHING)!=0)
             atomic_flag_clear(&init);
         else
             atexit(pw_internal_at_exit);
         atomic_flag_clear_explicit(&blocking,memory_order_release);
     }
-
+    uint8_t* pixels = NULL;
     pw_engine *engine = (pw_engine*) _engine;
-
+    SDL_Renderer * renderer = NULL;
+    SDL_Texture *texture = NULL;
     SDL_Window *window = SDL_CreateWindow("TODO: Add config for window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
     if(!window)
     {
@@ -54,7 +55,7 @@ static int pw_internal_start0(void *_engine)
         goto cleanup; // Hey, there's one use case for a goto.
     }
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     if(!renderer) renderer = SDL_CreateRenderer(window, -1, 0);
@@ -64,14 +65,14 @@ static int pw_internal_start0(void *_engine)
         goto cleanup;
     }
 
-    SDL_Texture *texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
     if(!texture)
     {
         printf("**PIPEWORKS ERROR** SDL failed to create a texture: %s\n", SDL_GetError());
         goto cleanup;
     }
 
-    uint8_t *pixels = malloc(1280*720*3);
+    pixels = malloc(1280*720*3);
     pw_bool running = 1; // TODO: pw_stop sets this to false
     SDL_Event event;
     while(running)
