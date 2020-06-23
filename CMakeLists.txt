@@ -36,7 +36,7 @@ else()
 endif()
 
 if(PIPEWORKS_CLANG_TIDY)
-    set(CMAKE_C_CLANG_TIDY ${PIPEWORKS_CLANG_TIDY} -checks=bugprone-*,clang-analyzer-*,-clang-analyzer-cplusplus*)
+    set(CMAKE_C_CLANG_TIDY ${PIPEWORKS_CLANG_TIDY} -checks=bugprone-*,clang-analyzer-*,-clang-analyzer-cplusplus* -warnings-as-errors=*)
     add_subdirectory(pipeworks)
     add_subdirectory(test_game)
 endif()
