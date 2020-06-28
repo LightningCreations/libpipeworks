@@ -14,7 +14,7 @@ option(PIPEWORKS_USE_SYSTEM_LIBSNDFILE "Use the system libsndfile rather than bu
 if(NOT PIPEWORKS_USE_SYSTEM_LIBPNG)
 	set(PNG_BUILD_ZLIB ON CACHE BOOL "Pipeworks uses internal ZLib by default")
 	set(ZLIB_LIBRARIES zlib)
-	set(ZLIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/zlib ${CMAKE_CURRENT_BINARY_DIR}/zlib)
+	set(ZLIB_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/zlib ${CMAKE_CURRENT_BINARY_DIR}/zlib)
 	set(PIPEWORKS_PNG_ROOTDIR ${CMAKE_CURRENT_SOURCE_DIR}/libpng)
 	add_subdirectory(zlib)
 	add_subdirectory(libpng)
