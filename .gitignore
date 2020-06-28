@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Build directories
+.idea/
 build*/
 /cmake-build-*/
 
