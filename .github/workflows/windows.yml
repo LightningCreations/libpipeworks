@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build_msvc:
     runs-on: windows-latest
     steps:
     - name: Checkout
