@@ -30,7 +30,7 @@ else()
 endif()
 
 if(NOT PIPEWORKS_USE_SYSTEM_LIBSNDFILE)
-	add_subdirectory(libsndfile)
+	add_subdirectory(libsndfile EXCLUDE_FROM_ALL)
 else()
 	find_package(SndFile)
 endif()
