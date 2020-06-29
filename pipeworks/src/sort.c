@@ -79,7 +79,7 @@ ll* pw_depth_sort(ll *things) {
     pw_thing **array = malloc(sizeof(pw_thing*)*size);
 
     size_t powerOfTwo = pw_internal_sort_floor_power_of_two(size);
-    float scale = size/powerOfTwo;
+    float scale = ((float)size)/powerOfTwo;
 
     ll_node *curNode = things->first;
 
