@@ -19,6 +19,7 @@
 
 // Pipeworks includes
 #include <pipeworks/thing.h>
+#include "sort.h"
 
 pw_engine* pw_init_engine()
 {
@@ -82,6 +83,9 @@ static int pw_internal_start0(void *_engine)
             if(event.type == SDL_QUIT)
                 running = 0;
         }
+        ll *sorted = pw_depth_sort(engine->things);
+        // Render
+        free(sorted);
         SDL_UpdateTexture(texture, NULL, pixels, 1280*3);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);

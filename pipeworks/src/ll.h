@@ -1,6 +1,12 @@
 #ifndef PRIVATE_LL_H
 #define PRIVATE_LL_H
 
+#ifndef _MSC_VER
+#include <stdatomic.h>
+#else
+#include "stdatomic.h"
+#endif
+
 #include <pipeworks/pw-std.h>
 
 #ifdef __cplusplus
@@ -19,7 +25,7 @@ typedef struct ll
 {
     ll_node *first;
     ll_node *last;
-    uint32_t size;
+    atomic_size_t size;
 } ll;
 
 ll* ll_init();

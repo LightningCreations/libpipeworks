@@ -11,7 +11,7 @@ message(FATAL_ERROR "libpipeworks Error: Not building either pipeworks shared or
 endif()
 
 
-add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/game.c src/ll.c include/pipeworks/engine.h include/pipeworks/game.h include/pipeworks/thing.h include/pipeworks/pw-std.h)
+add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/sort.c src/game.c src/ll.c include/pipeworks/engine.h include/pipeworks/game.h include/pipeworks/thing.h include/pipeworks/pw-std.h)
 
 target_include_directories(pipeworks-objects PRIVATE include)
 

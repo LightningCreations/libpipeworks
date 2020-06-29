@@ -5,7 +5,7 @@
 ll *ll_init()
 {
     ll *list = malloc(sizeof(ll));
-    list->size = 0;
+    atomic_store(&list->size, 0);
     list->first = NULL;
     list->last = NULL;
     return list;
@@ -18,7 +18,7 @@ void ll_push(ll *list, void *item)
     last->value = item;
     last->occupied = 1;
 
-    list->size++;
+    atomic_fetch_add(&list->size, 1);
     list->last->next = last;
     list->last = last;
 
