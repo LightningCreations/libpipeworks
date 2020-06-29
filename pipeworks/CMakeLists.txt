@@ -1,4 +1,4 @@
-if(NOT DEFINED PW_BUILD_SHARED)
+if(NOT DEFINED PW_BUILD_SHARED AND NOT MUSL)
 set(PW_BUILD_SHARED ON)
 endif()
 
@@ -28,11 +28,11 @@ target_link_libraries(pipeworks-objects PRIVATE pipeworks-interface)
 
 set_target_properties(pipeworks-objects PROPERTIES C_STANDARD 11
 	 POSITION_INDEPENDENT_CODE ON)
-if(PW_BUILD_SHARED)
+if(PW_BUILD_SHARED AND NOT MUSL)
 target_compile_definitions(pipeworks-objects PRIVATE PIPEWORKS_BUILDSHARED)
 endif()
 
-if(PW_BUILD_SHARED)
+if(PW_BUILD_SHARED AND NOT MUSL)
 message(STATUS "libpipeworks: Building Pipeworks Shared Library")
 add_library(pipeworks-shared SHARED $<TARGET_OBJECTS:pipeworks-objects>)
 target_link_libraries(pipeworks-shared pipeworks-interface)
