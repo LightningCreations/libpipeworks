@@ -112,4 +112,5 @@ ll* pw_depth_sort(ll *things) {
         ll_push(result, array[i]);
     }
     free(array);
+    return result;
 }
