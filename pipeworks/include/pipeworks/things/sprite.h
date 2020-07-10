@@ -1,3 +1,10 @@
+#ifndef PW_THINGS_SPRITE_H
+#define PW_THINGS_SPRITE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct pw_sprite pw_sprite;
 
 pw_sprite* pw_init_sprite(float x, float y, float width, float height, float depth, uint32_t numFrames, const char *const *const frames); // All the consts
@@ -19,3 +26,9 @@ void pw_sprite_set_size(float width, float height);
 void pw_sprite_set_pos_and_size(float x, float y, float width, float height);
 
 void pw_sprite_set_frame(uint32_t id);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
