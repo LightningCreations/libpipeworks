@@ -1,8 +1,10 @@
 #include <pipeworks/engine.h>
+#include <pipeworks/things/sprite.h>
 
-enum{
+enum {
     STATE_MENU = STATE_PRIME+1
 };
+
 typedef struct data
 {
     pw_engine *engine;
@@ -11,6 +13,7 @@ typedef struct data
 
 void game_load_state(pw_game_state next, pw_engine *engine, void *_game_data)
 {
+    static const char *menu_gfx_list[1] = {"menu/menu.png"};
     data game_data = *((data*) _game_data);
     switch(next)
     {
@@ -18,7 +21,7 @@ void game_load_state(pw_game_state next, pw_engine *engine, void *_game_data)
         pw_load_state(engine, STATE_MENU);
         break;
     case STATE_MENU:
-        if(!game_data.menu) game_data.menu = pw_init_thing();
+        if(!game_data.menu) game_data.menu = (pw_thing*) pw_init_sprite(0, 0, 0, 0, 0, 1, menu_gfx_list);
         pw_engine_add_thing(engine, game_data.menu);
         break;
     default:
