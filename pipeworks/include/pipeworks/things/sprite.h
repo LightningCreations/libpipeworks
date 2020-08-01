@@ -9,7 +9,7 @@ extern "C" {
 
 typedef struct pw_sprite pw_sprite;
 
-PIPEWORKS_API pw_sprite* pw_init_sprite(float x, float y, float width, float height, float depth, uint32_t numFrames, const char *const *const frames); // All the consts
+PIPEWORKS_API pw_sprite* pw_init_sprite(float x, float y, float width, float height, float depth, uint32_t numFrames, const char **frames);
 
 PIPEWORKS_API void pw_sprite_add_update_handler(void(*handler)(pw_sprite *sprite));
 
