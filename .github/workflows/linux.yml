@@ -24,6 +24,7 @@ jobs:
         update-submodules: true
         parallel: 8
         build-dir: ${{runner.workspace}}/build-clang 
+  build_gcc:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
