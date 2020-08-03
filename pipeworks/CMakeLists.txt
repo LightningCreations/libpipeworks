@@ -14,7 +14,7 @@ endif()
 add_library(pipeworks-objects OBJECT src/engine.c src/thing.c src/sort.c src/game.c src/ll.c src/things/sprite.c src/pw_util.c include/pipeworks/engine.h include/pipeworks/game.h include/pipeworks/thing.h include/pipeworks/pw-std.h include/pipeworks/things/sprite.h)
 
 target_include_directories(pipeworks-objects PRIVATE include)
-
+target_include_directories(pipeworks-objects PRIVATE ${PIPEWORKS_PNG_ROOTDIR})
 add_library(pipeworks-interface INTERFACE)
 
 

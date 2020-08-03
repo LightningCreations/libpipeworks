@@ -24,6 +24,7 @@ jobs:
         update-submodules: true
         parallel: 8
         build-dir: ${{runner.workspace}}/build-clang 
+        configure-options: -DPIPEWORKS_CLANG_TIDY=clang-tidy
   build_gcc:
     runs-on: ubuntu-latest
     steps:
@@ -41,3 +42,4 @@ jobs:
         update-submodules: true
         parallel: 8
         build-dir: ${{runner.workspace}}/build-gcc
+        configure-options: -DPIPEWORKS_CLANG_TIDY=clang-tidy
