@@ -79,20 +79,20 @@ ll* pw_depth_sort(ll *things) {
     pw_thing **array = malloc(sizeof(pw_thing*)*size);
 
     size_t powerOfTwo = pw_internal_sort_floor_power_of_two(size);
-    float scale = ((float)size)/powerOfTwo;
+    double scale = ((double)size)/powerOfTwo;
 
     ll_node *curNode = things->first;
 
     for(size_t merge = 0; merge < powerOfTwo; merge += 16) {
-        if(curNode == NULL) return NULL; // In case of concurrent modification, get the heck out to avoid a segfault
+        if(curNode == NULL) { free(array); return NULL; } // In case of concurrent modification, get the heck out to avoid a segfault
         size_t start = (size_t) (merge * scale);
         size_t end = (size_t) (start + 16 * scale);
         pw_internal_sort_insertion_sort(&curNode, array, start, end);
     }
-    if(curNode != NULL || atomic_load(&things->size) != size) // Final concurrent modification checks.
-        return NULL; // To summarize: Concurrent modification means that our sorting is invalid, and artifacts will appear.
-                     // To get around this, we exit as soon as we catch it and give the engine/layer a fresh chance to rerender.
-                     // After this though, the linked list has already finished getting copied
+    if((curNode != NULL) || (atomic_load(&things->size) != size)) { // Final concurrent modification checks.
+        free(array); // To summarize: Concurrent modification means that our sorting is invalid, and artifacts will appear.
+        return NULL; // To get around this, we exit as soon as we catch it and give the engine/layer a fresh chance to rerender.
+    }                // After this though, the linked list has already finished getting copied
 
     for(size_t length = 0; length < powerOfTwo; length += length) {
         for(size_t merge = 0; merge < powerOfTwo; merge += length * 2) {
