@@ -7,19 +7,12 @@ option(PIPEWORKS_USE_SYSTEM_LIBRARIES "Blanket option to use system libraries by
 mark_as_advanced(PIPEWORKS_USE_SYSTEM_LIBRARIES)
 
 option(PIPEWORKS_USE_SYSTEM_SDL "Use the system libSDL2 rather than building it" ${PIPEWORKS_USE_SYSTEM_LIBRARIES})
-option(PIPEWORKS_USE_SYSTEM_LIBSNDFILE "Use the system libsndfile rather than building it" OFF)
 
 if(NOT PIPEWORKS_USE_SYSTEM_SDL)
 	add_subdirectory(SDL)
 else()
 	find_package(SDL2)
 	add_library(SDL2 ALIAS SDL2::SDL2)
-endif()
-
-if(NOT PIPEWORKS_USE_SYSTEM_LIBSNDFILE)
-	add_subdirectory(libsndfile EXCLUDE_FROM_ALL)
-else()
-	find_package(SndFile)
 endif()
 
 if(PIPEWORKS_CLANG_TIDY)

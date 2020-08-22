@@ -1,6 +1,3 @@
 [submodule "SDL"]
 	path = SDL
 	url = https://github.com/LightningCreations/SDL.git
-[submodule "libsndfile"]
-	path = libsndfile
-	url = https://github.com/erikd/libsndfile
