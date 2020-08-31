@@ -10,12 +10,9 @@ char* pw_get_absolute_path(const char *path) {
     if(!exepath) {
         int dirname_len;
         int length = wai_getExecutablePath(NULL, 0, NULL);
-        char *exe = malloc(length+1);
-        wai_getExecutablePath(exe, length, &dirname_len);
-        free(exe); // Temporary buffer so we can get the dirname_len
-        exepath = malloc(dirname_len+2);
-        wai_getExecutablePath(exepath, dirname_len+1, NULL);
-        exepath[dirname_len+1] = 0; // Include the trailing slash;
+        exepath = malloc(length+1);
+        wai_getExecutablePath(exepath, length, &dirname_len);
+        exepath[dirname_len+1] = 0; // Include the trailing slash
     }
     if(path[0] == '/') { // Path is already absolute
         char *abs_path = malloc(strlen(path)+1); // We have to make a copy in order to give a mutable, freeable string
