@@ -35,9 +35,9 @@ static void pw_sprite_load_frame(pw_sprite *sprite, uint32_t index, const char *
     sprite->frameWidth = width;
     sprite->frameHeight = height;
 
-    sprite->frames[index] = malloc(width);
+    sprite->frames[index] = malloc(width * sizeof(sprite->frames[index][0]));
     for(int i = 0; i < width; i++)
-        sprite->frames[index][i] = malloc(height);
+        sprite->frames[index][i] = malloc(height * sizeof(sprite->frames[index][i][0]));
 
     for(int x = 0; x < width; x++)
         for(int y = 0; y < height; y++)
