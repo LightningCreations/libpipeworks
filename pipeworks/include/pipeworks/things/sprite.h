@@ -2,6 +2,7 @@
 #define PW_THINGS_SPRITE_H
 
 #include "../pw-std.h"
+#include "../render_interface.h"
 
 #ifdef __cplusplus
 extern "C" {

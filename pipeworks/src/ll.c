@@ -19,7 +19,8 @@ void ll_push(ll *list, void *item)
     last->occupied = 1;
 
     atomic_fetch_add(&list->size, 1);
-    list->last->next = last;
+
+    if(list->last) list->last->next = last;
     list->last = last;
 
     if(list->first == NULL) // Special case

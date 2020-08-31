@@ -19,6 +19,7 @@
 
 // Pipeworks includes
 #include <pipeworks/thing.h>
+#include "game.h"
 #include "sort.h"
 
 pw_engine* pw_init_engine()
@@ -76,6 +77,7 @@ static int pw_internal_start0(void *_engine)
     pixels = malloc(1280*720*3);
     pw_bool running = 1; // TODO: pw_stop sets this to false
     SDL_Event event;
+    pw_game_state cur_state = 0;
     while(running)
     {
         while(SDL_PollEvent(&event))
@@ -83,9 +85,16 @@ static int pw_internal_start0(void *_engine)
             if(event.type == SDL_QUIT)
                 running = 0;
         }
+        if(cur_state == 0) pw_load_state(engine, STATE_PRIME);
+        if(engine->next_state != cur_state) {
+            cur_state = engine->next_state;
+            engine->game->load_state(cur_state, engine, engine->game->load_state_userdata);
+        }
+        /*
         ll *sorted = pw_depth_sort(engine->things);
         // Render
         free(sorted);
+        */ // Commented out because of a bug
         SDL_UpdateTexture(texture, NULL, pixels, 1280*3);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);

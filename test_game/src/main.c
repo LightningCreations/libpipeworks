@@ -37,6 +37,8 @@ int main()
     pw_game *game = pw_init_game();
 
     data game_data;
+    game_data.engine = NULL;
+    game_data.menu = NULL;
 
     pw_set_load_state(game, game_load_state, (void*)(&game_data));
 
