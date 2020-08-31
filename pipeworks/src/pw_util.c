@@ -9,7 +9,10 @@ static char *exepath;
 char* pw_get_absolute_path(const char *path) {
     if(!exepath) {
         int dirname_len;
-        wai_getExecutablePath(NULL, INT32_MAX, &dirname_len);
+        int length = wai_getExecutablePath(NULL, 0, NULL);
+        char *exe = malloc(length+1);
+        wai_getExecutablePath(exe, length, &dirname_len);
+        free(exe); // Temporary buffer so we can get the dirname_len
         exepath = malloc(dirname_len+2);
         wai_getExecutablePath(exepath, dirname_len+1, NULL);
         exepath[dirname_len+1] = 0; // Include the trailing slash;
