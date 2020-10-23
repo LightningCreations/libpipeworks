@@ -49,11 +49,11 @@ static void pw_sprite_load_frame(pw_sprite *sprite, uint32_t index, const char *
     sprite->frameHeight = height;
 
     sprite->frames[index] = malloc(width * height * sizeof(uint32_t));
-    uint32_t(*frame)[height] = sprite->frames[index];
+    uint32_t *frame = sprite->frames[index];
 
     for(int x = 0; x < width; x++)
         for(int y = 0; y < height; y++)
-            frame[x][y] = // 0xAARRGGBB
+            frame[x+y*width] = // 0xAARRGGBB
                 (image_data[(y*width+x)*4+0] << 16) | // R
                 (image_data[(y*width+x)*4+1] <<  8) | // G
                 (image_data[(y*width+x)*4+2] <<  0) | // B

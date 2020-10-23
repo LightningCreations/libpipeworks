@@ -13,5 +13,5 @@ struct pw_sprite {
     uint32_t numFrames;
     uint32_t frameWidth;
     uint32_t frameHeight;
-    uint32_t (**frames)[]; // uint32_t(*frame)[frameWidth] = frames[id]; frames[x][y] = 0xAARRGGBB;
+    uint32_t (**frames); // frames[id][x+y*width] = 0xAARRGGBB;
 };
