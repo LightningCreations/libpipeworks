@@ -21,7 +21,7 @@ void game_load_state(pw_game_state next, pw_engine *engine, void *_game_data)
         pw_load_state(engine, STATE_MENU);
         break;
     case STATE_MENU:
-        if(!game_data.menu) game_data.menu = (pw_thing*) pw_init_sprite(0, 0, 0, 0, 0, 1, menu_gfx_list);
+        if(!game_data.menu) game_data.menu = (pw_thing*) pw_init_sprite(0, 0, 20, 20, 0, 1, menu_gfx_list);
         pw_engine_add_thing(engine, game_data.menu);
         break;
     default:

@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,7 +14,19 @@
 static void pw_update_sprite(pw_engine *engine, pw_thing *thing) {
 }
 
-static void pw_render_sprite(pw_engine *engine, pw_thing *thing, pw_render_interface *render) {
+static void pw_render_sprite(pw_engine *engine, pw_thing *thing, pw_render_interface render) {
+    pw_sprite *sprite = (pw_sprite*) thing;
+    uint32_t frameWidth = sprite->frameWidth;
+    uint32_t frameHeight = sprite->frameHeight;
+    float widthf = sprite->width;
+    float heightf = sprite->height;
+    uint32_t width = (uint32_t) floor(widthf);
+    uint32_t height = (uint32_t) floor(heightf);
+    for(int i = 0; i < width; i++) {
+        for(int j = 0; j < height; j++) {
+            pw_ri_plot_pixel(render, i, j, 0xffffff);
+        }
+    }
 }
 
 static void pw_sprite_load_frame(pw_sprite *sprite, uint32_t index, const char *rel_name) {
@@ -35,13 +48,12 @@ static void pw_sprite_load_frame(pw_sprite *sprite, uint32_t index, const char *
     sprite->frameWidth = width;
     sprite->frameHeight = height;
 
-    sprite->frames[index] = malloc(width * sizeof(sprite->frames[index][0]));
-    for(int i = 0; i < width; i++)
-        sprite->frames[index][i] = malloc(height * sizeof(sprite->frames[index][i][0]));
+    sprite->frames[index] = malloc(width * height * sizeof(uint32_t));
+    uint32_t(*frame)[height] = sprite->frames[index];
 
     for(int x = 0; x < width; x++)
         for(int y = 0; y < height; y++)
-            sprite->frames[index][x][y] = // 0xAARRGGBB
+            frame[x][y] = // 0xAARRGGBB
                 (image_data[(y*width+x)*4+0] << 16) | // R
                 (image_data[(y*width+x)*4+1] <<  8) | // G
                 (image_data[(y*width+x)*4+2] <<  0) | // B

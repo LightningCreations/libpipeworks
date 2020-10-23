@@ -21,6 +21,7 @@
 #include <pipeworks/thing.h>
 #include "game.h"
 #include "sort.h"
+#include "thing.h"
 
 pw_engine* pw_init_engine()
 {
@@ -29,8 +30,17 @@ pw_engine* pw_init_engine()
     return result;
 }
 
-static void pw_internal_at_exit(void){
+static void pw_internal_at_exit(void)
+{
     SDL_Quit();
+}
+
+void pw_engine_internal_plot_pixel(void *data, uint32_t x, uint32_t y, uint32_t color)
+{
+    pw_engine *engine = (pw_engine*) data;
+    engine->pixels[(x+y*1280)*3  ] = (color      ) & 0xFF;
+    engine->pixels[(x+y*1280)*3+1] = (color >>  8) & 0xFF;
+    engine->pixels[(x+y*1280)*3+2] = (color >> 16) & 0xFF;
 }
 
 static int pw_internal_start0(void *_engine)
@@ -46,9 +56,9 @@ static int pw_internal_start0(void *_engine)
             atexit(pw_internal_at_exit);
         atomic_flag_clear_explicit(&blocking,memory_order_release);
     }
-    uint8_t* pixels = NULL;
     pw_engine *engine = (pw_engine*) _engine;
-    SDL_Renderer * renderer = NULL;
+    engine->pixels = NULL;
+    SDL_Renderer *renderer = NULL;
     SDL_Texture *texture = NULL;
     SDL_Window *window = SDL_CreateWindow("TODO: Add config for window name", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, 0);
     if(!window)
@@ -74,7 +84,16 @@ static int pw_internal_start0(void *_engine)
         goto cleanup;
     }
 
-    pixels = malloc(1280*720*3);
+    {
+        pw_render_interface default_renderer;
+        pw_render_interface_vtable *default_renderer_vtable = malloc(sizeof(pw_render_interface_vtable));
+        default_renderer.vtable = default_renderer_vtable;
+        default_renderer.vtable->plot_pixel = pw_engine_internal_plot_pixel;
+        default_renderer.data = (void*) engine;
+        engine->renderer = default_renderer;
+    }
+
+    engine->pixels = malloc(1280*720*3);
     pw_bool running = 1; // TODO: pw_stop sets this to false
     SDL_Event event;
     pw_game_state cur_state = 0;
@@ -90,19 +109,25 @@ static int pw_internal_start0(void *_engine)
             cur_state = engine->next_state;
             engine->game->load_state(cur_state, engine, engine->game->load_state_userdata);
         }
+        ll_node *node = engine->things->first;
+        while(node != NULL) {
+            if(node->occupied)
+                ((pw_thing*) node->value)->render(engine, (pw_thing*) node->value, engine->renderer);
+            node = node->next;
+        }
         /*
         ll *sorted = pw_depth_sort(engine->things);
         // Render
         free(sorted);
         */ // Commented out because of a bug
-        SDL_UpdateTexture(texture, NULL, pixels, 1280*3);
+        SDL_UpdateTexture(texture, NULL, engine->pixels, 1280*3);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
     }
 
     status = 0; // If we made it here, it must have been successful
     cleanup:
-    if(pixels) free(pixels);
+    if(engine->pixels) free(engine->pixels);
     if(texture) SDL_DestroyTexture(texture);
     if(renderer) SDL_DestroyRenderer(renderer);
     if(window) SDL_DestroyWindow(window);
