@@ -38,9 +38,9 @@ static void pw_internal_at_exit(void)
 void pw_engine_internal_plot_pixel(void *data, uint32_t x, uint32_t y, uint32_t color)
 {
     pw_engine *engine = (pw_engine*) data;
-    engine->pixels[(x+y*1280)*3  ] = (color      ) & 0xFF;
-    engine->pixels[(x+y*1280)*3+1] = (color >>  8) & 0xFF;
-    engine->pixels[(x+y*1280)*3+2] = (color >> 16) & 0xFF;
+    engine->pixels[(x+y*1280)*4+3] = (color      ) & 0xFF;
+    engine->pixels[(x+y*1280)*4+2] = (color >>  8) & 0xFF;
+    engine->pixels[(x+y*1280)*4+1] = (color >> 16) & 0xFF;
 }
 
 static int pw_internal_start0(void *_engine)
@@ -77,7 +77,7 @@ static int pw_internal_start0(void *_engine)
         goto cleanup;
     }
 
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, 1280, 720);
     if(!texture)
     {
         printf("**PIPEWORKS ERROR** SDL failed to create a texture: %s\n", SDL_GetError());
@@ -93,7 +93,7 @@ static int pw_internal_start0(void *_engine)
         engine->renderer = default_renderer;
     }
 
-    engine->pixels = malloc(1280*720*3);
+    engine->pixels = malloc(1280*720*4);
     pw_bool running = 1; // TODO: pw_stop sets this to false
     SDL_Event event;
     pw_game_state cur_state = 0;
@@ -120,7 +120,7 @@ static int pw_internal_start0(void *_engine)
         // Render
         free(sorted);
         */ // Commented out because of a bug
-        SDL_UpdateTexture(texture, NULL, engine->pixels, 1280*3);
+        SDL_UpdateTexture(texture, NULL, engine->pixels, 1280*4);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
     }
